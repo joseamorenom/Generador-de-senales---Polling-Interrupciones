@@ -1,0 +1,24 @@
+main.c
+Este código configura el PWM en la Raspberry Pi Pico para generar las señales cuadradas, triangulares, de diente de sierra y senoidales en el pin PWM especificado.
+
+c_polling.c
+En este código modificado, hemos eliminado la función generate_square_wave(), generate_triangular_wave(), generate_sawtooth_wave() y generate_sine_wave() y hemos movido 
+el código correspondiente directamente dentro del bucle principal while(1). Esto significa que el programa realizará una verificación continua del estado del recurso 
+deseado (generación de señales) en cada iteración del bucle principal, lo que constituye una estrategia de polling.
+
+arduino_polling.ino
+En este código para Arduino, la función set_pwm_duty_cycle() establece el ciclo de trabajo del PWM en el pin especificado. Luego, en la función loop(), realizamos la 
+estrategia de polling, donde generamos las señales cuadradas, triangulares, de diente de sierra y senoidales directamente dentro del bucle principal.
+
+micropython_polling.py
+En este código, se utiliza MicroPython en la Raspberry Pi Pico para generar señales cuadradas, triangulares, de diente de sierra y senoidales utilizando la estrategia de polling. 
+
+c_interr.c
+En este código, utilizamos un temporizador para generar las señales periódicas. La función timer_callback() se ejecutará cada vez que el temporizador alcance su período, y 
+dentro de esta función, incrementamos el ciclo de trabajo de la señal PWM. Esto nos permite generar señales cuadradas, triangulares, de diente de sierra y senoidales de manera
+eficiente utilizando solo interrupciones.
+
+c_interr_polling.c
+En este código, la interrupción del temporizador actualiza la variable signal_update_needed para indicar que se necesita generar una nueva señal. En el bucle principal, 
+se verifica esta variable y se genera la señal correspondiente cuando es necesario. Esta combinación de interrupciones y polling te permite mantener la capacidad 
+de respuesta del sistema al mismo tiempo que te brinda un mayor control sobre la generación de señales.
